@@ -1,0 +1,65 @@
+{
+  "manifest_version": 3,
+  "name": "图提取 ImageGrab",
+  "short_name": "图提取",
+  "version": "1.0.0",
+  "description": "一键提取淘宝 / 京东 / 拼多多商家版商品详情页的全部图片，集中预览并批量下载为 PNG。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "downloads",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.taobao.com/*",
+    "*://*.tmall.com/*",
+    "*://*.jd.com/*",
+    "*://*.pinduoduo.com/*",
+    "*://*.yangkeduo.com/*",
+    "*://*.alicdn.com/*",
+    "*://*.360buyimg.com/*",
+    "*://*.pddpic.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.taobao.com/*",
+        "*://*.tmall.com/*",
+        "*://*.jd.com/*",
+        "*://*.pinduoduo.com/*",
+        "*://*.yangkeduo.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_title": "图提取：获取本页图片",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["content.css"],
+      "matches": [
+        "*://*.taobao.com/*",
+        "*://*.tmall.com/*",
+        "*://*.jd.com/*",
+        "*://*.pinduoduo.com/*",
+        "*://*.yangkeduo.com/*"
+      ]
+    }
+  ]
+}

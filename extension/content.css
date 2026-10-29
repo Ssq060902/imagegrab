@@ -1,0 +1,121 @@
+/**
+ * 图提取 ImageGrab —— 悬浮按钮样式（content.css）
+ * 该样式通过 <link> 注入到 Shadow DOM 内部，
+ * 与电商页面的全局样式完全隔离，不会被覆盖也不会污染页面。
+ */
+
+.ig-wrap {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2147483647; /* 保证盖在页面最上层 */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+/* ===================== 悬浮按钮 ===================== */
+.ig-fab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: linear-gradient(135deg, #4f7cff 0%, #8b5cf6 100%);
+  box-shadow: 0 6px 20px rgba(79, 124, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  position: relative;
+}
+
+/* hover 反馈：轻微上浮 + 阴影加深 */
+.ig-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(79, 124, 255, 0.55), 0 3px 8px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.05);
+}
+
+/* 点击反馈 */
+.ig-fab:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.ig-fab-icon {
+  flex: none;
+}
+
+.ig-fab-text {
+  line-height: 1;
+}
+
+/* ===================== 提取中状态 ===================== */
+.ig-fab.is-loading {
+  pointer-events: none;
+  opacity: 0.92;
+}
+
+.ig-fab-spinner {
+  display: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ig-spin 0.7s linear infinite;
+}
+
+.ig-fab.is-loading .ig-fab-spinner {
+  display: inline-block;
+}
+
+.ig-fab.is-loading .ig-fab-icon {
+  display: none;
+}
+
+@keyframes ig-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===================== 轻提示 Toast ===================== */
+.ig-toast {
+  max-width: 260px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #fff;
+  background: rgba(17, 24, 39, 0.92);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.ig-toast.is-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ig-toast.is-error {
+  background: rgba(220, 38, 38, 0.95);
+}
+
+/* ===================== 小屏适配 ===================== */
+@media (max-width: 640px) {
+  .ig-wrap {
+    right: 16px;
+    bottom: 16px;
+  }
+  .ig-fab {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+}
